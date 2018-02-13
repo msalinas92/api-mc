@@ -39,11 +39,15 @@ paths:
         '200':
           description: la cuenta bancaria fue creada correctamente
           schema:
-            $ref: '#/definitions/Iterable'
+            type: array
+            items:
+              $ref: '#/definitions/BankAccount'
         '201':
           description: la cuenta bancaria fue creada correctamente
           schema:
-            $ref: '#/definitions/Iterable'
+            type: array
+            items:
+              $ref: '#/definitions/BankAccount'
         '401':
           description: No tienes permisos para realizar esta operación
         '403':
@@ -75,9 +79,33 @@ paths:
           schema:
             type: array
             items:
-              type: object
+              $ref: '#/definitions/BankAccount'
         '201':
           description: Created
+        '401':
+          description: No tienes permisos para realizar esta operación
+        '403':
+          description: No tienes permisos para acceder a este recurso
+        '404':
+          description: No se encontro la operación solicitada
+  /banks-accounts/banks:
+    get:
+      tags:
+        - banks-accounts-controller
+      summary: Get banks
+      description: Get all banks
+      operationId: banksUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operación exitosa
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Bank'
         '401':
           description: No tienes permisos para realizar esta operación
         '403':
@@ -108,7 +136,7 @@ paths:
           schema:
             type: array
             items:
-              type: object
+              $ref: '#/definitions/BankAccount'
         '401':
           description: No tienes permisos para realizar esta operación
         '403':
@@ -138,7 +166,7 @@ paths:
           schema:
             type: array
             items:
-              type: object
+              $ref: '#/definitions/BankAccount'
         '204':
           description: No Content
         '401':
@@ -148,8 +176,18 @@ paths:
         '404':
           description: No se encontro la operación solicitada
 definitions:
-  Iterable:
+  Bank:
     type: object
+    properties:
+      code:
+        type: string
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      status:
+        type: boolean
   BankAccount:
     type: object
     properties:
