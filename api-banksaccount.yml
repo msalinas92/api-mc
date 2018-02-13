@@ -1,0 +1,171 @@
+swagger: '2.0'
+info:
+  description: REST API Multicaja
+  version: '1.0'
+  title: REST API
+  termsOfService: Terms of service
+  contact:
+    name: Matías Salinas
+    url: 'https://www.multicaja.cl'
+    email: matias.salinas@multicaja.cl
+  license:
+    name: Apache License Version 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+host: 'localhost:8085'
+basePath: /
+tags:
+  - name: banks-accounts-controller
+    description: Banks Accounts Controller
+paths:
+  /banks-accounts/:
+    post:
+      tags:
+        - banks-accounts-controller
+      summary: Create Bank Account
+      description: Send an object with the user information
+      operationId: createBankUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: bank
+          description: bank
+          required: true
+          schema:
+            $ref: '#/definitions/BankAccount'
+      responses:
+        '200':
+          description: la cuenta bancaria fue creada correctamente
+          schema:
+            $ref: '#/definitions/Iterable'
+        '201':
+          description: la cuenta bancaria fue creada correctamente
+          schema:
+            $ref: '#/definitions/Iterable'
+        '401':
+          description: No tienes permisos para realizar esta operación
+        '403':
+          description: No tienes permisos para acceder a este recurso
+        '404':
+          description: No se encontro la operación solicitada
+    put:
+      tags:
+        - banks-accounts-controller
+      summary: Update banks accounts
+      description: Send an object with the user information
+      operationId: updateBanksAccountsUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: bankList
+          description: bankList
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BankAccount'
+      responses:
+        '200':
+          description: Cuenta bancaria actualizado correctamente
+          schema:
+            type: array
+            items:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: No tienes permisos para realizar esta operación
+        '403':
+          description: No tienes permisos para acceder a este recurso
+        '404':
+          description: No se encontro la operación solicitada
+  '/banks-accounts/{id}':
+    get:
+      tags:
+        - banks-accounts-controller
+      summary: Get banks accounts
+      description: Get all banks accounts
+      operationId: banksAccountsUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Operación exitosa
+          schema:
+            type: array
+            items:
+              type: object
+        '401':
+          description: No tienes permisos para realizar esta operación
+        '403':
+          description: No tienes permisos para acceder a este recurso
+        '404':
+          description: No se encontro la operación solicitada
+    delete:
+      tags:
+        - banks-accounts-controller
+      summary: Delete bank
+      description: Send the bank id
+      operationId: deteleBankUsingDELETE
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Cuenta bancaria eliminada correctamente
+          schema:
+            type: array
+            items:
+              type: object
+        '204':
+          description: No Content
+        '401':
+          description: No tienes permisos para realizar esta operación
+        '403':
+          description: No tienes permisos para acceder a este recurso
+        '404':
+          description: No se encontro la operación solicitada
+definitions:
+  Iterable:
+    type: object
+  BankAccount:
+    type: object
+    properties:
+      bank_code:
+        type: string
+      bank_name:
+        type: string
+      id:
+        type: integer
+        format: int64
+      name_account:
+        type: string
+      number_account:
+        type: string
+      status:
+        type: boolean
+      type_account:
+        type: integer
+        format: int32
